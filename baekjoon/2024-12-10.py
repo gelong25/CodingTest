@@ -1,0 +1,42 @@
+# 1316번 : 그룹 단어 체커 
+# 입력 
+# 1. 단어의 개수 N
+# 2. N줄에 걸친 단어 
+
+# 논리
+# 1. 문자가 연속해서 나타나면 그룹 단어
+# 2. 연속되는 문자 처리 : 현재 문자와 이전 문자가 같으면 패스 
+# 3. 문자가 끊기는 경우 : 이미 확인한 문자가 다시 등장하면 그룹 단어가 아님 
+
+# 출력 : 그룹 단어 개수 
+
+# 입력 
+N = int(input())
+words = []
+for i in range(N):
+    word = input()
+    words.append(word)
+
+# 논리 
+count = 0
+
+# 그룹 단어 판별 
+def isGroup(word):
+    seen = set()        # 이미 확인한 문자를 저장할 집합 
+    prev_char = None    # 이전 문자 초기화 
+
+    for char in word:           # 문자열 순회
+        if char != prev_char:   # 이전 문자와 현재 문자가 다를 경우 
+            if char in seen:    # 이미 확인한 문자인 경우 
+                return False    # false 반환 
+            seen.add(char)      # 새로운 문자일 경우 확인한 문자를 저장하는 집합에 추가 
+        prev_char = char        # 이전 문자를 현재 문자로 갱신 
+    return True 
+
+# 단어 리스트 순회하며 그룹 단어 판별 
+for word in words:
+    if isGroup(word):
+        count += 1
+
+# 출력 
+print(count)
