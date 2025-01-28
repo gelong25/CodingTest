@@ -1,0 +1,69 @@
+// 입력
+// 1. 숫자 카드의 개수 N
+// 2. 숫자 카드에 적혀 있는 정수 N개
+// 3. 정수의 개수 M
+// 4. M개의 정수
+
+// 출력
+// 카드에 적힌 수가 정소에 있다면 1, 없으면 0
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 카드 입력
+        int n = Integer.parseInt(br.readLine());
+
+        String[] cardInput = br.readLine().split(" ");
+        int[] card = new int[n];
+
+        for(int i = 0; i < n; i++) {
+            card[i] = Integer.parseInt(cardInput[i]);
+        }
+
+        // 정수 입력
+        int m = Integer.parseInt(br.readLine());
+        String[] numInput = br.readLine().split(" ");
+
+
+        // 카드 배열 정렬
+        Arrays.sort(card);
+
+        // 결과 출력
+        for(int i = 0; i < m; i++) {
+            int num = Integer.parseInt(numInput[i]);
+
+            if(binarySearch(card, num)) {
+                bw.write("1 ");
+            } else {
+                bw.write("0 ");
+            }
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
+
+    // 이진 탐색
+    public static boolean binarySearch(int[] arr, int key) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if(arr[mid] == key) {
+                return true;
+            } else if (arr[mid] < key){
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return false;
+    }
+}
