@@ -1,0 +1,66 @@
+// 입력
+// 1. 자연수 N
+// 2. N개의 정수
+// 3. 범위 내의 수 M
+// 4. M개의 수
+
+// 출력
+// M개의 줄에 존재하면 1, 존재하지 않으면 0 출력
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 자연수 n 입력
+        int n = Integer.parseInt(br.readLine());
+
+        // n개의 정수 입력
+        String[] input_n = br.readLine().split(" ");
+        int[] arr = new int[n];
+        for(int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(input_n[i]);
+        }
+
+        // m 입력
+        int m = Integer.parseInt(br.readLine());
+        String[] input_m = br.readLine().split(" ");
+
+        Arrays.sort(arr);
+
+        // 결과 출력
+        for (int i = 0; i < m; i++) {
+            int check = Integer.parseInt(input_m[i]);
+
+            if(bst(arr, check)) {
+                bw.write("1\n");
+            } else {
+                bw.write("0\n");
+            }
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+
+    // 이진 탐색
+    public static boolean bst(int[] array, int key) {
+        int low = 0;
+        int high = array.length - 1;
+
+        while(low <= high) {
+            int mid = (low + high) / 2 ;
+            if(array[mid] == key) {
+                return true;
+            } else if (array[mid] < key) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return false;
+    }
+}
