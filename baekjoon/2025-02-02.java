@@ -1,0 +1,54 @@
+// 입력
+// 1. 정수 N
+// 2. N개의 줄에 수열을 이루는 1이상 N이하의 정수
+
+// 출력
+// 수열을 만들기 위해 필요한 연산 : 한 줄에 하나씩
+// push 연산 : +
+// pop 연산 : -
+// 불가능한 경우 : NO
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        Stack<Integer> stack = new Stack<>();
+        List<String> result = new ArrayList<>();
+
+        int top = 1;
+
+        int n = Integer.parseInt(br.readLine());
+
+        for(int i = 0; i < n; i++) {
+            int target = Integer.parseInt(br.readLine());
+
+            while(top <= target) {
+                stack.push(top++);
+                result.add("+");
+            }
+
+            if(!stack.isEmpty() && stack.peek() == target) {
+                stack.pop();
+                result.add("-");
+            } else {
+                bw.write("NO");
+                bw.flush();
+                return;
+            }
+
+        }
+
+        // 결과 출력
+        for(int i = 0; i < result.size(); i++) {
+            bw.write(result.get(i) + "\n");
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
+}
