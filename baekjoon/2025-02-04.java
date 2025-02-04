@@ -1,0 +1,77 @@
+// 입력
+// 1. 명령의 수 N
+// 2. N개의 줄에 명령 : 한 줄에 하나씩
+
+/*
+* push_front X : 정수 X를 덱의 앞에 넣음
+* push_back X : 정수 X를 덱의 뒤에 넣음
+* pop_front : 덱의 가장 앞에 있는 수를 제거 및 출력 / 덱이 비었으면 -1 출력
+* pop_back : 덱의 가장 뒤에 있는 수를 제거 및 출력 / 덱이 비었으면 -1 출력
+* size : 덱에 들어있는 정수의 개수 출력
+* empty : 덱이 비었으면 1 / 아니면 0 출력
+* front : 덱의 가장 앞에 있는 정수 출력 / 덱이 비었으면 -1 출력
+* back : 덱의 가장 뒤에 있는 정수 출력 / 덱이 비었으면 -1 출력
+*/
+
+// 출력
+// 출력해야 하는 명령이 주어지면 출력 : 한 줄에 하나씩
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        Deque<Integer> deque = new LinkedList<>();
+        int n = Integer.parseInt(br.readLine());
+
+        for(int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
+
+            if(command.startsWith("push_front")) {
+                int num = Integer.parseInt(st.nextToken());
+                deque.offerFirst(num);
+            } else if(command.startsWith("push_back")) {
+                int num = Integer.parseInt(st.nextToken());
+                deque.offerLast(num);
+            } else if(command.equals("pop_front")) {
+                if(deque.size() == 0) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(deque.pollFirst() + "\n");
+                }
+            } else if(command.equals("pop_back")) {
+                if(deque.size() == 0) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(deque.pollLast() + "\n");
+                }
+            } else if(command.equals("size")) {
+                bw.write(deque.size() + "\n");
+            } else if(command.equals("empty")) {
+                if(deque.size() == 0) {
+                    bw.write("1\n");
+                } else {
+                    bw.write("0\n");
+                }
+            } else if(command.equals("front")) {
+                if(deque.size() == 0) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(deque.peekFirst() + "\n");
+                }
+            } else if(command.equals("back")) {
+                if(deque.size() == 0) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(deque.peekLast() + "\n");
+                }
+            }
+        }
+        bw.flush();
+        bw.close();
+        br.close();
+    }}
