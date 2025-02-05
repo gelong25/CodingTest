@@ -1,0 +1,87 @@
+// 입력
+// 1. 길이가 N인 문자열
+// 2. 입력할 명령어의 개수 M
+// 3. M줄에 걸쳐 입력할 명령어 : 한 줄에 하나씩
+
+/*
+명령어 수행 전 커서는 문자열 맨 뒤에 위치함
+L : 커서를 왼쪽으로 한 칸 이동 (커서가 문장 맨 앞일 경우 무시)
+D : 커서를 오른쪽으로 한 칸 이동 (커서가 문장 맨 뒤일 경우 무시)
+B : 커서 왼쪽에 있는 문자 삭제 (커서가 문장 맨 앞일 경우 무시)
+P $ : 커서 왼쪽에 $ 추가
+ */
+
+// 출력
+// 명령어를 수행하고 난 문자열 결과 출력
+
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        // 문자열  입력 받기
+        String str = br.readLine();
+
+        Stack<Character> leftStack = new Stack<>();
+        Stack<Character> rightStack = new Stack<>();
+
+        // 입력받은 문자열 스택에 저장
+        for(char c : str.toCharArray()) {
+            leftStack.push(c);
+        }
+
+        int m = Integer.parseInt(br.readLine());
+
+        // 입력 받는 명령 실행
+        for(int i = 0; i < m; i++) {
+            String command = br.readLine();
+            char temp;
+
+            if(command.equals("L")) {
+                if(leftStack.size() == 0) {
+                    continue;
+                } else  {
+                    temp = leftStack.pop();
+                    rightStack.push(temp);
+                }
+            } else if(command.equals("D")) {
+                if(rightStack.size() == 0) {
+                    continue;
+                } else {
+                    temp = rightStack.pop();
+                    leftStack.push(temp);
+                }
+            } else if(command.equals("B")) {
+                if(leftStack.size() == 0) {
+                    continue;
+                } else {
+                    leftStack.pop();
+                }
+            } else {
+                leftStack.push(command.charAt(2));
+            }
+        }
+
+        // 문자열 출력
+        StringBuilder sb = new StringBuilder();
+        while(!leftStack.isEmpty()) {
+            sb.append(leftStack.pop());
+        }
+        // left 스택 문자열 뒤집기
+        sb.reverse();
+
+        while(!rightStack.isEmpty()) {
+            sb.append(rightStack.pop());
+        }
+
+        bw.write(sb.toString());
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+}
