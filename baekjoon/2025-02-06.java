@@ -1,0 +1,42 @@
+// 입력
+// 1. N의 약수의 개수
+// 2. N의 진짜 약수
+
+// 출력
+// N을 구해 출력
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+        StringTokenizer st = new StringTokenizer(str);
+
+        int[] arr = new int[n];
+
+        for(int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int i : arr) {
+            min = Math.min(min, i);
+            max = Math.max(max, i);
+        }
+
+        int result = max * min;
+
+        bw.write(result + "\n");
+
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
+}
